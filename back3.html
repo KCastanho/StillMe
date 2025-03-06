@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="fr" class="scrollbar-hide">
+<head>
+  <meta charset="UTF-8">
+  <title>Landing Page - Parallax Zoom et Slides Améliorés</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#E37EC9',
+            secondary: '#00969E',
+            accent: '#49e07b',
+            dark: '#000000',
+            light: '#fffafc'
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'fadeInOut': 'fadeInOut 3s ease-in-out infinite',
+            'fadeIn': 'fadeIn 1.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards',
+            'fadeInDelayed': 'fadeIn 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 1.5s',
+            'fadeInStatic': 'fadeInStatic 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 1.5s',
+            'bounce-custom': 'bounceArrow 2.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(5deg)' }
+            },
+            fadeInOut: {
+              '0%, 100%': { opacity: '0.3' },
+              '50%': { opacity: '0.7' }
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '20%': { opacity: '0.3' },
+              '100%': { opacity: '1' }
+            },
+            bounceArrow: {
+              '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0) rotate(45deg)' },
+              '40%': { transform: 'translateY(-12px) rotate(45deg)' },
+              '60%': { transform: 'translateY(-6px) rotate(45deg)' },
+              '70%': { transform: 'translateY(-3px) rotate(45deg)' }
+            },
+            fadeInStatic: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' }
+            }
+          },
+          textShadow: {
+            sm: '0 1px 2px rgba(0, 0, 0, 0.3)',
+            md: '0 2px 4px rgba(0, 0, 0, 0.5)',
+            lg: '0 2px 8px rgba(0, 0, 0, 0.6)'
+          },
+          backgroundImage: {
+            'radial-gradient': 'radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)',
+            'radial-vignette': 'radial-gradient(ellipse at center, rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 100%)',
+            'grid-pattern': 'linear-gradient(to right, rgba(227,126,201,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(227,126,201,0.15) 1px, transparent 1px)',
+            'dots-pattern': 'radial-gradient(rgba(0,150,158,0.2) 2px, transparent 2px)',
+            'circles-pattern': 'radial-gradient(rgba(227,126,201,0.15) 8px, transparent 8px)'
+          }
+        },
+        plugins: [
+          function({ addUtilities }) {
+            const newUtilities = {
+              '.text-shadow-sm': {
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)'
+              },
+              '.text-shadow-md': {
+                textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
+              },
+              '.text-shadow-lg': {
+                textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
+              },
+              '.text-shadow-none': {
+                textShadow: 'none'
+              }
+            };
+            addUtilities(newUtilities);
+          }
+        ]
+      }
+    }
+  </script>
+  <!-- Tailwind CSS customizations -->
+  <style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .scrollbar-hide {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    
+    /* Add fadeInUp animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    
+    .animate-fadeInUp {
+      animation: fadeInUp 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
+    
+    /* Fix pour la hauteur mobile */
+    @supports (-webkit-touch-callout: none) {
+      .h-screen {
+        height: -webkit-fill-available;
+      }
+    }
+  </style>
+
+</head>
+<body class="font-['Segoe_UI',Tahoma,Geneva,Verdana,sans-serif] bg-[#f0f0f0] h-screen overflow-hidden text-dark">
+
+  <!-- SECTION HERO -->
+  <section id="hero" class="relative w-full h-screen overflow-hidden bg-center bg-no-repeat transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)]" style="background-image: url('./asset/Paysages\ Adobe\ Stock\ \(3\).jpeg'); will-change: transform; background-size: cover;">
+    <!-- Overlay pour la lisibilité du texte -->
+    <div class="absolute inset-0 bg-gradient-to-b from-dark/50 to-dark/70 z-[5] pointer-events-none"></div>
+    <!-- Anneau en avant-plan -->
+    <div id="ring" class="absolute inset-0 bg-center bg-no-repeat bg-cover pointer-events-none z-10 origin-center transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.3)]" style="background-image: url('fleur1.webp'); will-change: transform;"></div>
+    <div class="relative z-20 text-center text-white top-1/2 -translate-y-1/2 opacity-0 animate-fadeIn max-w-[1200px] mx-auto w-[90%] px-4 sm:px-6">
+      <div class="mb-4 sm:mb-6 flex justify-center">
+        <img src="blanc.webp" alt="Logo" class="h-[clamp(4rem,10vw,8rem)] object-contain drop-shadow-lg">
+      </div>
+      <p class="text-[clamp(1rem,2vw,1.5rem)] max-w-[800px] mx-auto text-shadow-md leading-relaxed">Nous sommes encore là, et nous continuons à parler</p>
+    </div>
+    <div class="absolute bottom-[15%] sm:top-3/4 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 text-white animate-fadeInStatic">
+      <span class="font-medium tracking-wider text-shadow-sm mb-2 text-sm sm:text-base">SCROLLER POUR EXPLORER</span>
+      <span class="block w-[22px] h-[22px] sm:w-[25px] sm:h-[25px] border-b-[2px] sm:border-b-[3px] border-r-[2px] sm:border-r-[3px] border-white animate-bounce-custom shadow-[0_0_10px_rgba(255,255,255,0.3)] hover:border-white hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300 ease-in-out mt-[12px] sm:mt-[15px] mx-auto"></span>
+    </div>
+    <!-- Les particules seront ajoutées dynamiquement ici -->
+    <div id="particles" class="absolute inset-0 z-[15] pointer-events-none overflow-hidden"></div>
+  </section>
+
+  <!-- SECTION SLIDES -->
+  <div class="relative w-full h-[300vh] bg-[#f0f0f0]" id="slides">
+    <!-- Effet d'ombre lissé et doux en haut de la section, sous l'image -->
+    <div class="absolute top-0 left-0 right-0 h-[100px] bg-gradient-to-b from-black/70 via-black/30 to-transparent z-[14] pointer-events-none"></div>
+    
+    <!-- Image fleurcoupe.webp pleine largeur en position absolue -->  
+    <div class="absolute top-0 left-0 right-0 w-full overflow-hidden z-[16]">
+      <div class="relative w-full">
+        <img src="fleurcoupe2.webp" alt="Fleur coupée" class="w-[105%] h-auto object-cover min-h-[200px] transform translate-x-[0%]">
+      </div>
+    </div>
+    
+    <div class="scroll-section sticky top-0 h-screen w-full flex items-center justify-center flex-col transition-all duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)] overflow-hidden p-8 relative" id="section1">
+      <!-- Arrière-plan avec dégradé plus prononcé -->  
+      <div class="absolute inset-0 z-0 bg-gradient-to-br from-gray-50 via-pink-50 to-gray-200"></div>
+      
+      <!-- Premier motif de fond avec opacité augmentée -->  
+      <div class="absolute inset-0 z-[1] opacity-20 bg-[length:200px_200px] bg-repeat" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48cGF0aCBkPSJNMzAgMzBtLTI4IDBhMjggMjggMCAxIDAgNTYgMCAyOCAyOCAwIDEgMC01NiAweiIgc3Ryb2tlPSIjRTM3RUM5IiBzdHJva2Utd2lkdGg9IjAuNSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2UtZGFzaGFycmF5PSI1LDUiLz48L3N2Zz4=');"></div>
+      
+      <!-- Deuxième motif de fond pour plus de profondeur -->  
+      <div class="absolute inset-0 z-[2] opacity-15 bg-[length:80px_80px] bg-repeat rotate-12 bg-circles-pattern"></div>
+      
+      <!-- Effet de lumière subtil -->  
+      <div class="absolute top-0 left-0 right-0 h-[30%] bg-gradient-to-b from-white/30 to-transparent z-[3]"></div>
+
+      
+      <!-- Contenu principal -->  
+      <div class="relative z-20 w-full max-w-[1200px] mx-auto">
+        <div class="slide-content w-full mx-auto px-5 py-8 flex flex-col items-center opacity-0 translate-y-[30px] transition-all duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)] delay-200">
+          
+          
+          <!-- Badge et logo -->  
+          <div class="mb-8 flex flex-col items-center">
+            <div class="px-4 py-1 bg-primary/10 rounded-md mb-6">
+              <span class="text-sm font-medium tracking-wide text-primary">#METOO MOVEMENT</span>
+            </div>
+            
+            <div class="relative inline-block">
+              <div class="absolute -inset-3 bg-primary/20 rounded-full blur-sm opacity-50"></div>
+              <div class="relative bg-white rounded-full p-1.5 shadow-md border border-primary/20">
+                <div class="bg-gray-50 rounded-full p-4">
+                  <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold tracking-tight">
+                    <span class="text-gray-800">Still</span>
+                    <span class="text-primary">Me</span>
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Description de la chaîne -->  
+          <div class="max-w-[800px] text-center mb-10">
+            <p class="text-[clamp(1rem,1.5vw,1.2rem)] leading-relaxed mb-8 text-gray-700">
+              Une chaîne YouTube dédiée aux <span class="font-medium text-primary">témoignages</span> et aux <span class="font-medium text-primary">histoires</span> de celles et ceux qui ont trouvé le courage de s'exprimer. Nous amplifions les voix qui ont été réduites au silence trop longtemps.
+            </p>
+            
+            <!-- Statistiques -->  
+            <div class="flex flex-wrap justify-center gap-8 mb-10">
+              <div class="flex flex-col items-center">
+                <span class="text-2xl font-semibold text-primary mb-1">10K+</span>
+                <span class="text-sm text-gray-600">Abonnés</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <span class="text-2xl font-semibold text-secondary mb-1">250+</span>
+                <span class="text-sm text-gray-600">Témoignages</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <span class="text-2xl font-semibold text-secondary mb-1">5M+</span>
+                <span class="text-sm text-gray-600">Vues</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Boutons d'action -->  
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="#" class="group relative inline-flex items-center justify-center px-8 py-3 font-medium text-white bg-primary rounded-md overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-sm">
+              <span class="relative flex items-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
+                </svg>
+                S'abonner à la chaîne
+              </span>
+            </a>
+            
+            <a href="#" class="group relative inline-flex items-center justify-center px-8 py-3 font-medium text-primary bg-transparent border border-primary/50 rounded-md overflow-hidden transition-all duration-300 hover:bg-primary/5 hover:border-primary">
+              <span class="relative flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                En savoir plus
+              </span>
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="scroll-section sticky top-0 h-screen w-full flex items-center justify-center flex-col transition-all duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)] overflow-hidden p-8 relative" id="section2">
+      <!-- Arrière-plan avec dégradé plus prononcé -->  
+      <div class="absolute inset-0 z-0 bg-gradient-to-tr from-gray-100 via-teal-50 to-white"></div>
+      
+      <!-- Premier motif de fond avec opacité augmentée -->  
+      <div class="absolute inset-0 z-[1] opacity-25 bg-[length:150px_150px] bg-repeat" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMzAgMzBtLTI4IDBhMjggMjggMCAxIDAgNTYgMCAyOCAyOCAwIDEgMC01NiAweiIgc3Ryb2tlPSIjMDA5NjlFIiBzdHJva2Utd2lkdGg9IjAuNSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2UtZGFzaGFycmF5PSI1LDUiLz48L3N2Zz4=')"></div>
+      
+      <!-- Deuxième motif de fond pour plus de texture -->  
+      <div class="absolute inset-0 z-[2] opacity-15 bg-[length:60px_60px] bg-repeat -rotate-12 bg-dots-pattern"></div>
+      
+      <!-- Effet de lumière radiale -->  
+      <div class="absolute inset-0 z-[3] bg-radial-gradient opacity-50"></div>
+      
+      <div class="relative z-20 w-full max-w-[1400px] mx-auto">
+        <!-- Contenu principal -->  
+        <div class="slide-content w-full mx-auto px-4 py-8 flex flex-col md:flex-row gap-12 items-center opacity-0 translate-y-[30px] transition-all duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
+          
+          <!-- Vidéo avec design sobre -->  
+          <div class="w-full md:w-1/2 relative group">
+            <div class="relative rounded-lg overflow-hidden shadow-md border border-gray-200 transition duration-300 group-hover:shadow-lg">
+              <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/BVHX7YZVz2c?si=x5KYmbR31uSLofFj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              <div class="absolute bottom-0 left-0 right-0 bg-white/90 p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <p class="text-sm font-medium text-primary">#BreakTheSilence</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Contenu textuel -->  
+          <div class="w-full md:w-1/2 text-left flex flex-col items-start">
+            <div class="inline-block mb-2 px-3 py-1 bg-primary/10 rounded-md">
+              <span class="text-sm font-medium text-primary tracking-wide">#MeToo</span>
+            </div>
+            
+            <h2 class="text-[clamp(1.8rem,3.5vw,3rem)] font-bold mb-4 text-gray-800 relative inline-block">
+              <span class="text-primary">Briser</span> le Silence
+            </h2>
+            
+            <div class="w-16 h-px bg-primary/50 mb-6"></div>
+            
+            <p class="text-[clamp(0.9rem,1.5vw,1.1rem)] leading-relaxed mb-6 text-gray-600">
+              Chaque voix compte. Chaque histoire mérite d'être entendue. Ensemble, nous créons un espace où les survivant(e)s peuvent partager leurs expériences et trouver du soutien dans une communauté bienveillante.
+            </p>
+            
+            <div class="flex flex-wrap gap-3 mb-6">
+              <span class="px-3 py-1 bg-gray-100 rounded-md text-sm font-medium text-gray-700">#SpeakUp</span>
+              <span class="px-3 py-1 bg-gray-100 rounded-md text-sm font-medium text-gray-700">#TimesUp</span>
+              <span class="px-3 py-1 bg-gray-100 rounded-md text-sm font-medium text-gray-700">#BelieveSurvivors</span>
+            </div>
+            
+            <a href="#" class="group relative inline-flex items-center justify-center overflow-hidden rounded-md bg-primary/90 px-6 py-2.5 font-medium text-white transition duration-300 ease-out hover:bg-primary hover:shadow-sm">
+              <span class="relative flex items-center gap-2">
+                Rejoindre le mouvement
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="scroll-section sticky top-0 h-screen w-full flex items-center justify-center flex-col transition-all duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)] overflow-hidden p-8 relative" id="section3">
+      <!-- Arrière-plan avec dégradé plus riche -->
+      <div class="absolute inset-0 z-0 bg-gradient-to-bl from-gray-50 via-pink-50 to-gray-100"></div>
+      
+      <!-- Premier motif symbolique avec opacité augmentée -->
+      <div class="absolute inset-0 z-[1] opacity-20 bg-[length:40px_40px] bg-repeat" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIyIiBmaWxsPSIjRTM3RUM5IiAvPjwvc3ZnPg==')"></div>
+      
+      <!-- Deuxième motif pour créer une texture en grille -->
+      <div class="absolute inset-0 z-[2] opacity-10 bg-[length:100px_100px] bg-grid-pattern"></div>
+      
+      <!-- Effet de vignette subtil pour plus de profondeur -->
+      <div class="absolute inset-0 z-[3] bg-radial-vignette opacity-30"></div>
+      
+      <div class="relative z-20 w-full max-w-[1400px] mx-auto">
+        <!-- Titre de la section -->
+        <div class="text-center mb-10">
+          <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold mb-3 text-gray-800 tracking-tight">#<span class="text-primary">MeToo</span> Stories</h2>
+          <div class="w-16 h-px bg-primary/50 mx-auto mb-5"></div>
+          <p class="text-[clamp(0.9rem,1.5vw,1.1rem)] max-w-2xl mx-auto text-gray-600 leading-relaxed">Des témoignages puissants qui donnent une voix à celles et ceux qui ont été réduits au silence.</p>
+        </div>
+        
+        <!-- Conteneur des vidéos -->
+        <div class="slide-content w-full flex flex-col lg:flex-row justify-center items-center gap-6 lg:gap-8 opacity-0 translate-y-[30px] transition-all duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
+          <!-- Vidéo 1 -->
+          <div class="video-container group relative">
+            <iframe class="rounded-lg shadow-md w-[280px] sm:w-[315px] h-[500px] sm:h-[560px] transition-transform duration-300 group-hover:shadow-lg border border-gray-200" src="https://www.youtube.com/embed/QPOLrbKI5oQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-1 rounded-md text-sm font-medium shadow-sm opacity-0 group-hover:opacity-100 group-hover:-bottom-6 transition-all duration-300 whitespace-nowrap text-primary border border-gray-100">#BriserLeSilence</div>
+          </div>
+          
+          <!-- Vidéo 2 -->
+          <div class="video-container group relative mt-8 lg:mt-0">
+            <iframe class="rounded-lg shadow-md w-[280px] sm:w-[315px] h-[500px] sm:h-[560px] transition-transform duration-300 group-hover:shadow-lg border border-gray-200" src="https://www.youtube.com/embed/QPOLrbKI5oQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-1 rounded-md text-sm font-medium shadow-sm opacity-0 group-hover:opacity-100 group-hover:-bottom-6 transition-all duration-300 whitespace-nowrap text-primary border border-gray-100">#PouvoirDeLaParole</div>
+          </div>
+          
+          <!-- Vidéo 3 -->
+          <div class="video-container group relative mt-8 lg:mt-0">
+            <iframe class="rounded-lg shadow-md w-[280px] sm:w-[315px] h-[500px] sm:h-[560px] transition-transform duration-300 group-hover:shadow-lg border border-gray-200" src="https://www.youtube.com/embed/QPOLrbKI5oQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-1 rounded-md text-sm font-medium shadow-sm opacity-0 group-hover:opacity-100 group-hover:-bottom-6 transition-all duration-300 whitespace-nowrap text-primary border border-gray-100">#EnsemblePlusForts</div>
+          </div>
+        </div>
+        
+        <!-- Bouton d action -->
+        <div class="text-center mt-14">
+          <a href="#" class="inline-block py-2.5 px-6 bg-primary/90 text-white font-medium tracking-wide rounded-md transition-all duration-300 hover:bg-primary hover:shadow-sm focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white">#JoinTheMovement</a>
+        </div>
+      </div>
+    </div>
+
+  <!-- SECTION FINALE -->
+  <section class="final-section py-8 md:py-12 px-4 md:px-8 text-center relative min-h-[25vh] flex flex-col items-center justify-center text-light overflow-hidden">
+    <div class="absolute inset-0 z-0 bg-white"></div>
+    <div class="absolute inset-0 z-[1] bg-[url('data:image/svg+xml,%3Csvg width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z%22 fill=%22%23E37EC9%22 fill-opacity=%220.05%22') opacity-50 z-[-1]"></div>
+    <div class="relative z-20">
+      <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] mb-4 text-primary font-bold relative inline-block opacity-0 translate-y-5 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] after:content-[''] after:absolute after:bottom-[-10px] after:left-1/4 after:w-1/2 after:h-[3px] after:bg-secondary after:rounded-full">Rejoignez le mouvement</h2>
+      <p class="max-w-[700px] mx-auto mb-5 leading-[1.8] text-[clamp(1rem,1.5vw,1.2rem)] text-dark opacity-0 translate-y-5 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)]">
+        Ensemble, nous pouvons faire la différence. Rejoignez notre communauté et amplifiez les voix de celles et ceux qui ont été réduits au silence trop longtemps.
+      </p>
+      <div class="mt-6 opacity-0 translate-y-5 transition-[opacity,transform] duration-800 ease-[cubic-bezier(0.22,0.61,0.36,1)] delay-300">
+        <a href="#section1" class="inline-block py-[15px] px-[40px] bg-primary text-light no-underline rounded-[50px] text-[1.1rem] font-semibold tracking-wider transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] border-2 border-primary cursor-pointer hover:bg-secondary hover:border-secondary hover:-translate-y-[3px] hover:shadow-[0_10px_20px_rgba(227,126,201,0.4)] active:-translate-y-[1px] active:shadow-[0_5px_10px_rgba(227,126,201,0.3)] active:duration-100 active:ease-[cubic-bezier(0.34,1.56,0.64,1)]">Retour en haut</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCRIPT : Gestion du zoom, déplacement et interactivité avancée -->
+  <script>
+    // ===== PARTIE 1 : EFFET PARALLAXE INITIAL =====
+    let scrollValue = 0;
+    const hero = document.getElementById("hero");
+    const ring = document.getElementById("ring");
+    const sections = document.querySelectorAll('.scroll-section');
+
+    /* ---- Paramètres du fond ---- */
+    const zoomFactorBg = 0.025;    // Zoom plus doux du fond pour un effet plus progressif
+    const maxBgSize = 170;         // Taille max du fond en % (augmenté pour un zoom plus important)
+    const delayScrollBg = 10;      // Retard réduit pour que l'effet commence plus tôt
+    const bgPositionFactor = 0.015; // Facteur de déplacement horizontal réduit pour un effet plus subtil
+    
+    // Ajouter des variables CSS pour contrôler les transitions globales
+    document.documentElement.style.setProperty('--scroll-behavior', 'smooth');
+    document.documentElement.style.setProperty('--transition-timing', 'cubic-bezier(0.25, 0.1, 0.25, 1)');
+    
+    // Au lieu d'injecter du CSS, nous utiliserons des classes Tailwind
+    // Ajouter des classes Tailwind aux éléments concernés
+    document.documentElement.classList.add('scroll-smooth');
+    
+    // Ajouter des classes pour les optimisations de performance
+    document.querySelectorAll('.scroll-section').forEach(section => {
+      section.classList.add('will-change-[transform,opacity]', 'backface-hidden', 'transform-gpu');
+    });
+    
+    document.querySelectorAll('.slide-content').forEach(content => {
+      content.classList.add('will-change-[transform,opacity]', 'backface-hidden', 'transform-gpu');
+    });
+
+    /* ---- Paramètres de l'anneau ---- */
+    const ringInitialScale = 1.1;     // Zoom initial de l'anneau
+    const zoomFactorRing = 0.0008;    // Facteur de zoom réduit pour un effet plus progressif
+    const maxRingScale = 2.0;         // Zoom max de l'anneau augmenté pour un effet final plus impressionnant
+
+    const ringInitialTranslateY = 20;   // Décalage vertical initial (en px)
+    const ringTranslateFactor = 0.04;   // Facteur de déplacement vertical réduit pour un mouvement plus doux
+    const maxRingTranslateY = 80;       // Translation verticale maximum augmentée pour un effet plus ample
+
+    // Applique les valeurs initiales à l'anneau
+    ring.style.transform = `translateY(${ringInitialTranslateY}px) scale(${ringInitialScale})`;
+
+    // Seuil de scroll simulé pour terminer l'effet et réactiver le scroll natif
+    const threshold = 500; // Augmenté pour que l'effet dure plus longtemps
+
+    // Utilisation de requestAnimationFrame pour des animations plus fluides
+    let ticking = false;
+    let lastWheelEvent = null;
+    let animationActive = true; // Indique si l'animation de scroll est active
+    
+    function wheelHandler(e) {
+      // N'empêche le scroll natif que si l'animation est active
+      if (animationActive) {
+        e.preventDefault();
+      } else {
+        // Si l'animation n'est pas active, laisser le scroll natif fonctionner
+        return;
+      }
+      
+      // Stocke l'événement pour le traiter dans requestAnimationFrame
+      lastWheelEvent = e;
+      
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (lastWheelEvent) {
+            // Traitement de l'animation dans requestAnimationFrame pour plus de fluidité
+            scrollValue += lastWheelEvent.deltaY;
+            
+            // Permet le scroll dans les deux sens avec limites
+            if (scrollValue < 0) scrollValue = 0;
+            
+            // Si on dépasse le seuil, on active le scroll natif avec une stabilisation
+            if (scrollValue >= threshold && animationActive) {
+              // Marquer l'animation comme inactive pour éviter les déclenchements multiples
+              animationActive = false;
+              
+              // Créer un élément de stabilisation pour éviter les tremblements
+              // Cet élément invisible aide à stabiliser le DOM pendant la transition
+              const stabilizer = document.createElement('div');
+              stabilizer.style.position = 'fixed';
+              stabilizer.style.top = '0';
+              stabilizer.style.left = '0';
+              stabilizer.style.width = '100%';
+              stabilizer.style.height = '100%';
+              stabilizer.style.backgroundColor = 'transparent';
+              stabilizer.style.zIndex = '9999';
+              stabilizer.style.pointerEvents = 'none';
+              document.body.appendChild(stabilizer);
+              
+              // Figer temporairement le comportement de défilement pour éviter les tremblements
+              document.documentElement.style.setProperty('--scroll-behavior', 'auto');
+              
+              // Utiliser un délai minimal pour permettre au navigateur de stabiliser le rendu
+              setTimeout(() => {
+                // Activer le scroll natif
+                document.body.style.overflow = "auto";
+                
+                // Désactiver l'écouteur d'événement pour permettre le scroll natif
+                window.removeEventListener("wheel", wheelHandler);
+                
+                // Initialiser les animations de section
+                initSectionAnimations();
+                
+                // Supprimer l'élément de stabilisation
+                if (document.body.contains(stabilizer)) {
+                  document.body.removeChild(stabilizer);
+                }
+                
+                // Rétablir le comportement de défilement normal
+                document.documentElement.style.setProperty('--scroll-behavior', 'smooth');
+              }, 10); // Délai minimal pour stabiliser
+            }
+            
+            // Fonction d'easing pour adoucir le mouvement
+            const easeOutQuad = t => t * (2 - t);
+            const progress = Math.min(1, scrollValue / threshold);
+            const easedProgress = easeOutQuad(progress);
+
+            /* Zoom du fond avec easing amélioré */
+            let effectiveScrollBg = scrollValue - delayScrollBg;
+            if (effectiveScrollBg < 0) effectiveScrollBg = 0;
+            
+            // Calculer le zoom en partant de 'cover' (environ 110-120%) jusqu'à maxBgSize
+            // On commence à 110% pour simuler un départ depuis 'cover'
+            let newSizeBg = 110 + effectiveScrollBg * zoomFactorBg;
+            if (newSizeBg > maxBgSize) newSizeBg = maxBgSize;
+            
+            // Ajout d'un léger décalage horizontal pour un effet de parallaxe subtil
+            const bgPositionX = 50 + (easedProgress * 3); // Décalage de 0 à 3% vers la droite
+            
+            // Pendant l'animation initiale, on passe de 'cover' à une valeur en pourcentage
+            if (scrollValue === 0) {
+              // Au tout début, on laisse le CSS 'cover' s'appliquer
+            } else {
+              // Dès qu'on commence à scroller, on passe en pourcentage
+              hero.style.backgroundSize = newSizeBg + "%";
+            }
+            
+            hero.style.backgroundPositionX = `${bgPositionX}%`;
+
+            /* Zoom et déplacement vertical de l'anneau avec easing amélioré */
+            // Utilisation d'une fonction d'easing plus sophistiquée pour l'anneau
+            const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+            const ringEasedProgress = easeOutExpo(progress);
+            
+            let newScaleRing = ringInitialScale + (maxRingScale - ringInitialScale) * ringEasedProgress;
+            let newTranslateY = ringInitialTranslateY + (maxRingTranslateY - ringInitialTranslateY) * ringEasedProgress;
+            
+            // Ajout d'une légère rotation pour un effet plus naturel
+            const ringRotation = progress * 2; // Rotation maximale de 2 degrés
+            
+            ring.style.transform = `translateY(${newTranslateY}px) scale(${newScaleRing}) rotate(${ringRotation}deg)`;
+            
+            lastWheelEvent = null;
+          }
+          ticking = false;
+        });
+        
+        ticking = true;
+      }
+    }
+    
+
+    window.addEventListener("wheel", wheelHandler, { passive: false });
+
+    // ===== PARTIE 2 : ANIMATION DES SECTIONS AU SCROLL =====
+    function initSectionAnimations() {
+      // Fonction pour déterminer si un élément est visible dans le viewport
+      function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+          rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.75 &&
+          rect.bottom >= 0
+        );
+      }
+
+      // Fonction pour animer les sections visibles avec requestAnimationFrame
+      let scrollTicking = false;
+      
+      // Variable pour suivre la dernière position de défilement
+      let lastScrollPosition = 0;
+      let scrollDelta = 0;
+      
+      function handleScroll() {
+        if (!scrollTicking) {
+          requestAnimationFrame(() => {
+            // Calculer le delta de défilement pour détecter les mouvements brusques
+            const currentScrollPosition = window.pageYOffset;
+            scrollDelta = Math.abs(currentScrollPosition - lastScrollPosition);
+            lastScrollPosition = currentScrollPosition;
+            
+            // Si le défilement est trop rapide, réduire la sensibilité des animations
+            const isSmooth = scrollDelta < 15;
+            
+            sections.forEach(section => {
+              if (isElementInViewport(section)) {
+                if (!section.classList.contains('active')) {
+                  // Ajouter la classe active
+                  section.classList.add('active');
+                  
+                  // Animer progressivement le contenu avec un délai
+                  const content = section.querySelector('.slide-content');
+                  if (content) {
+                    // Vérifier si c'est la première section pour une animation spéciale
+                    const isFirstSection = section.id === 'section1';
+                    const animationDelay = isFirstSection ? 100 : (isSmooth ? 250 : 350);
+                    
+                    setTimeout(() => {
+                      if (isFirstSection) {
+                        // Animation spéciale pour la première slide
+                        content.style.transition = `opacity 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)`;
+                        content.style.opacity = '1';
+                        content.style.transform = 'translateY(0) scale(1)';
+                      } else {
+                        // Animation standard pour les autres slides
+                        content.style.transition = `opacity 0.8s var(--transition-timing), transform 0.8s var(--transition-timing)`;
+                        content.style.opacity = '1';
+                        content.style.transform = 'translateY(0)';
+                      }
+                    }, animationDelay);
+                  }
+                  
+                  // Animer la ligne sous le titre avec un délai légèrement plus long
+                  const title = section.querySelector('.slide-title');
+                  if (title) {
+                    const isFirstSection = section.id === 'section1';
+                    const titleDelay = isFirstSection ? 200 : 250;
+                    
+                    setTimeout(() => {
+                      if (isFirstSection) {
+                        // Animation spéciale pour le titre de la première section
+                        title.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        title.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                          title.style.transform = 'scale(1)';
+                        }, 300);
+                      }
+                      title.style.setProperty('--title-after-width', '100%');
+                    }, titleDelay);
+                  }
+                  
+                  // Animer les éléments enfants de manière séquentielle
+                  const elements = section.querySelectorAll('.slide-description, .slide-button');
+                  const isFirstSection = section.id === 'section1';
+                  
+                  elements.forEach((el, i) => {
+                    el.style.opacity = '0';
+                    
+                    if (isFirstSection) {
+                      // Animation spéciale pour les éléments de la première section
+                      el.style.transform = 'translateY(30px) scale(0.95)';
+                      el.style.transition = `opacity 1s ease, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1) ${0.4 + i * 0.15}s`;
+                      
+                      setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0) scale(1)';
+                      }, 350 + i * 150);
+                    } else {
+                      // Animation standard pour les autres sections
+                      el.style.transform = 'translateY(20px)';
+                      el.style.transition = `opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) ${0.3 + i * 0.1}s`;
+                      
+                      setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                      }, 300 + i * 100);
+                    }
+                  });
+                }
+              } else {
+                // Si la section n'est plus visible, la désactiver
+                if (section.classList.contains('active')) {
+                  section.classList.remove('active');
+                  
+                  // Réinitialiser les animations pour pouvoir les rejouer
+                  const elements = section.querySelectorAll('.slide-description, .slide-button');
+                  elements.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                  });
+                }
+              }
+            });
+            scrollTicking = false;
+          });
+          scrollTicking = true;
+        }
+      }
+
+      // Ajouter un écouteur d'événement pour le scroll
+      window.addEventListener('scroll', handleScroll);
+
+      // Déclencher une fois au chargement pour animer les sections déjà visibles
+      handleScroll();
+
+      // Ajouter un effet de parallaxe léger sur les sections pendant le scroll avec requestAnimationFrame
+      let lastScrollTop = 0;
+      let parallaxTicking = false;
+      
+      window.addEventListener('scroll', function() {
+        if (!parallaxTicking) {
+          requestAnimationFrame(() => {
+            const st = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollingDown = st > lastScrollTop;
+            
+            sections.forEach(section => {
+              const speed = 0.03; // Réduit pour plus de fluidité
+              const rect = section.getBoundingClientRect();
+              const centerY = rect.top + rect.height / 2;
+              const distFromCenter = centerY - window.innerHeight / 2;
+              
+              // Effet de parallaxe avec easing pour les sections visibles, sauf la première slide
+              if (isElementInViewport(section) && section.id !== 'section1') {
+                // Fonctions d'easing plus sophistiquées pour des mouvements plus naturels
+                const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+                const easeInOutQuad = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                
+                const progress = Math.min(1, Math.abs(distFromCenter) / (window.innerHeight / 2));
+                const easedProgress = easeOutCubic(progress);
+                
+                // Calcul plus fluide de la translation avec amortissement
+                const translateY = distFromCenter * speed * easedProgress * (scrollingDown ? -0.8 : 0.8);
+                
+                // Ajout d'un effet de rotation très subtil
+                const rotateZ = (distFromCenter / window.innerHeight) * 0.5 * (scrollingDown ? -1 : 1);
+                
+                section.style.transform = `translateY(${translateY}px) rotateZ(${rotateZ}deg)`;
+                
+                // Effet de parallaxe sur l'arrière-plan
+                const bgScale = 1 + (easedProgress * 0.05);
+                section.style.setProperty('--bg-scale', bgScale);
+              } else if (section.id === 'section1') {
+                // Réinitialiser la transformation pour la première slide
+                // Cela empêche tout mouvement indésirable
+                section.style.transform = 'translateY(0) rotateZ(0deg)';
+                section.style.setProperty('--bg-scale', 1);
+              }
+            });
+            
+            lastScrollTop = st <= 0 ? 0 : st;
+            parallaxTicking = false;
+          });
+          parallaxTicking = true;
+        }
+      }, { passive: true });
+    }
+
+    // ===== PARTIE 3 : OPTIMISATION MOBILE =====
+    function initMobileOptimizations() {
+      // Détection du type d'appareil et de la taille d'écran
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isSmallScreen = window.innerWidth < 768;
+      
+      if (isMobile || isSmallScreen) {
+        // Ajuster les animations pour les appareils mobiles et petits écrans
+        document.documentElement.classList.add('mobile');
+        
+        // Réduire la complexité des animations sur mobile
+        const style = document.createElement('style');
+        style.textContent = `
+          .mobile .scroll-section::before { 
+            background-attachment: scroll !important; 
+          }
+          .mobile #hero {
+            background-attachment: scroll !important;
+            background-position: center center !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
+            max-height: 100vh !important;
+          }
+          #hero {
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
+            max-height: 100vh !important;
+          }
+          .mobile #ring {
+            background-position: center bottom !important;
+          }
+          .mobile .slide-content {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+          }
+          .mobile img {
+            max-width: 100% !important;
+          }
+          @media (max-width: 640px) {
+            .mobile .text-[clamp(2rem,5vw,3rem)] {
+              font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+            }
+            .mobile .text-[clamp(1rem,1.5vw,1.2rem)] {
+              font-size: clamp(0.9rem, 1.5vw, 1.1rem) !important;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Ajuster le seuil pour les appareils tactiles
+        threshold = 200;
+        
+        // Ajuster les hauteurs pour les petits écrans
+        if (isSmallScreen) {
+          document.querySelectorAll('.h-[300vh]').forEach(el => {
+            el.style.height = '250vh';
+          });
+        }
+      }
+      
+      // Gestion des événements tactiles pour l'effet initial
+      let touchStartY = 0;
+      
+      hero.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+      }, { passive: false });
+      
+      // Amélioration de la gestion tactile avec requestAnimationFrame
+      let touchTicking = false;
+      let lastTouchEvent = null;
+      
+      hero.addEventListener('touchmove', function(e) {
+        // Toujours intercepter les événements tactiles dans la section hero
+        e.preventDefault();
+        lastTouchEvent = e;
+        
+        if (!touchTicking) {
+          requestAnimationFrame(() => {
+            if (lastTouchEvent) {
+              const touchY = lastTouchEvent.touches[0].clientY;
+              const deltaY = touchStartY - touchY;
+              
+              // Adoucir le mouvement tactile
+              const smoothDeltaY = deltaY * 0.6;
+              
+              // Simuler l'événement de la roue de souris
+              const simulatedEvent = { 
+                deltaY: smoothDeltaY, 
+                preventDefault: () => {}
+              };
+              
+              wheelHandler(simulatedEvent);
+              touchStartY = touchY;
+              lastTouchEvent = null;
+            }
+            touchTicking = false;
+          });
+          touchTicking = true;
+        }
+      }, { passive: false });
+      
+      // Détecter le swipe vers le bas en haut de page pour réactiver l'animation
+      document.addEventListener('touchstart', function(e) {
+        // Si on est en haut de page et que l'animation n'est pas active
+        if (window.scrollY < 50 && !animationActive) {
+          touchStartY = e.touches[0].clientY;
+          
+          // Fonction pour détecter le swipe vers le bas
+          const detectSwipeDown = function(e) {
+            const touchY = e.touches[0].clientY;
+            const deltaY = touchY - touchStartY;
+            
+            // Si on a swipé vers le bas d'au moins 50px
+            if (deltaY > 50) {
+              // Réactiver l'animation
+              animationActive = true;
+              scrollValue = threshold - 10;
+              document.body.style.overflow = "hidden";
+              // Réattacher l'écouteur d'événement pour la roue de souris
+              window.addEventListener("wheel", wheelHandler, { passive: false });
+              
+              // Retirer les écouteurs temporaires
+              document.removeEventListener('touchmove', detectSwipeDown);
+              document.removeEventListener('touchend', cancelSwipeDetection);
+            }
+          };
+          
+          // Fonction pour annuler la détection de swipe
+          const cancelSwipeDetection = function() {
+            document.removeEventListener('touchmove', detectSwipeDown);
+            document.removeEventListener('touchend', cancelSwipeDetection);
+          };
+          
+          // Ajouter les écouteurs temporaires
+          document.addEventListener('touchmove', detectSwipeDown, { passive: true });
+          document.addEventListener('touchend', cancelSwipeDetection, { passive: true });
+        }
+      }, { passive: true });
+    }
+    
+    // Initialiser les optimisations mobiles
+    initMobileOptimizations();
+    
+    // Ajouter un écouteur d'événement pour gérer le redimensionnement de la fenêtre
+    window.addEventListener('resize', function() {
+      // Mettre à jour la variable CSS pour la hauteur réelle du viewport sur mobile
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+      
+      // Ajuster les éléments en fonction de la taille de l'écran
+      const isSmallScreen = window.innerWidth < 768;
+      if (isSmallScreen && !document.documentElement.classList.contains('mobile')) {
+        document.documentElement.classList.add('mobile');
+        
+        // Ajuster les hauteurs pour les petits écrans
+        document.querySelectorAll('.h-[300vh]').forEach(el => {
+          el.style.height = '250vh';
+        });
+      } else if (!isSmallScreen && document.documentElement.classList.contains('mobile') && !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        document.documentElement.classList.remove('mobile');
+        
+        // Rétablir les hauteurs pour les grands écrans
+        document.querySelectorAll('.h-[300vh]').forEach(el => {
+          el.style.height = '300vh';
+        });
+      }
+      
+      // Maintenir la hauteur constante de l'image de fond
+      maintainBackgroundHeight();
+    });
+    
+    // Ajouter un écouteur d'événement pour gérer le défilement
+    let lastScrollY = window.scrollY;
+    let scrollTimer;
+    
+    window.addEventListener('scroll', function() {
+      // Utiliser un débounce pour éviter les appels trop fréquents
+      clearTimeout(scrollTimer);
+      
+      // Vérifier si le défilement est significatif
+      if (Math.abs(window.scrollY - lastScrollY) > 10) {
+        // Mettre à jour immédiatement pour les grands changements
+        maintainBackgroundHeight();
+        lastScrollY = window.scrollY;
+      } else {
+        // Pour les petits changements, utiliser un délai
+        scrollTimer = setTimeout(function() {
+          maintainBackgroundHeight();
+          lastScrollY = window.scrollY;
+        }, 50);
+      }
+    }, { passive: true });
+    
+    // Initialiser la variable CSS pour la hauteur réelle du viewport
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    
+    // Fonction pour maintenir la hauteur constante de l'image de fond
+    function maintainBackgroundHeight() {
+      const hero = document.getElementById('hero');
+      if (hero) {
+        // Forcer la hauteur à 100vh
+        hero.style.height = '100vh';
+        hero.style.minHeight = '100vh';
+        hero.style.maxHeight = '100vh';
+        
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+        
+        if (isMobile) {
+          // Sur les appareils mobiles, utiliser 'cover' pour une meilleure adaptation
+          hero.style.backgroundSize = 'cover';
+          hero.style.backgroundPosition = 'center center';
+          hero.style.backgroundAttachment = 'scroll';
+          
+          // S'assurer que la hauteur est exactement 100vh sur mobile
+          document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+          hero.style.height = 'calc(var(--vh, 1vh) * 100)';
+        } else {
+          // Sur desktop, maintenir une hauteur constante avec une taille fixe
+          // Utiliser cover pour éviter les problèmes de redimensionnement
+          hero.style.backgroundSize = 'cover';
+          hero.style.backgroundPosition = 'center center';
+          hero.style.backgroundAttachment = 'scroll';
+        }
+      }
+    }
+    
+    // Appeler la fonction au chargement de la page
+    maintainBackgroundHeight();
+    
+    // Créer des particules flottantes pour l'effet de forêt
+    createParticles();
+    
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const isMobile = window.innerWidth < 768;
+      const particleCount = isMobile ? 15 : 30; // Moins de particules sur mobile
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Taille aléatoire entre 3 et 8 pixels
+        const size = Math.random() * 5 + 3;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Position aléatoire
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        
+        // Opacité aléatoire
+        particle.style.opacity = Math.random() * 0.4 + 0.3;
+        
+        // Animation avec délai aléatoire
+        const animDuration = Math.random() * 10 + 10; // Entre 10 et 20 secondes
+        const animDelay = Math.random() * 5;
+        particle.style.animation = `float ${animDuration}s ease-in-out ${animDelay}s infinite, fadeInOut ${animDuration/2}s ease-in-out ${animDelay}s infinite`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Déclaration d'une variable pour éviter les déclenchements multiples
+    let isTransitioning = false;
+    
+    // Ajouter un écouteur d'événement de scroll pour détecter quand l'utilisateur remonte
+    window.addEventListener('scroll', function() {
+      // Si l'utilisateur remonte en haut de la page (moins de 50px du haut) et qu'on n'est pas déjà en transition
+      if (window.scrollY < 50 && !animationActive && !isTransitioning) {
+        isTransitioning = true;
+        
+        // Créer un élément de transition pour éviter les sauts brusques
+        const transitionElement = document.createElement('div');
+        transitionElement.style.position = 'fixed';
+        transitionElement.style.top = '0';
+        transitionElement.style.left = '0';
+        transitionElement.style.width = '100%';
+        transitionElement.style.height = '100%';
+        transitionElement.style.backgroundColor = 'transparent';
+        transitionElement.style.zIndex = '9999';
+        transitionElement.style.pointerEvents = 'none';
+        document.body.appendChild(transitionElement);
+        
+        // Délai court pour permettre au navigateur de stabiliser l'animation
+        setTimeout(() => {
+          // Réactiver l'animation de scroll
+          animationActive = true;
+          scrollValue = threshold - 10; // Juste en dessous du seuil
+          document.body.style.overflow = "hidden";
+          // Réattacher l'écouteur d'événement pour la roue de souris
+          window.addEventListener("wheel", wheelHandler, { passive: false });
+          
+          // Supprimer l'élément de transition après un court délai
+          setTimeout(() => {
+            document.body.removeChild(transitionElement);
+            isTransitioning = false;
+          }, 50);
+        }, 50);
+      }
+    }, { passive: true });
+    
+    // ===== PARTIE 4 : NAVIGATION FLUIDE AMÉLIORÉE =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          // Animation de défilement fluide avec transition personnalisée
+          const startPosition = window.pageYOffset;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+          const distance = targetPosition - startPosition;
+          const duration = 1000; // Durée de l'animation en ms
+          let startTime = null;
+          
+          function animation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // Fonction d'easing cubique pour une animation plus naturelle
+            const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            const easedProgress = easeInOutCubic(progress);
+            
+            window.scrollTo(0, startPosition + distance * easedProgress);
+            
+            if (timeElapsed < duration) {
+              requestAnimationFrame(animation);
+            }
+          }
+          
+          requestAnimationFrame(animation);
+        }
+      });
+    });
+    
+    // ===== PARTIE 5 : ANIMATION DE LA SECTION FINALE =====
+    const finalSection = document.querySelector('.final-section');
+    if (finalSection) {
+      // Nous n'avons plus besoin de modifier le contenu car il est déjà défini en HTML
+      
+      // Ajouter l'animation d'entrée lorsque la section finale devient visible
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.3 // Déclencher l'animation quand 30% de la section est visible
+      };
+      
+      const finalSectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Animer tous les éléments avec des classes d'opacité et de translation
+            const animatedElements = finalSection.querySelectorAll('h2, p, .final-cta');
+            animatedElements.forEach((el, index) => {
+              setTimeout(() => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+              }, 200 * index); // Animation séquentielle avec délai
+            });
+            
+            finalSectionObserver.unobserve(entry.target); // Ne déclencher qu'une seule fois
+          }
+        });
+      }, observerOptions);
+      
+      finalSectionObserver.observe(finalSection);
+    }
+  </script>
+  
+  <!-- Footer responsive -->
+  <footer class="bg-primary text-white py-6 px-4 md:px-8">
+    <div class="max-w-6xl mx-auto flex justify-center items-center">
+      <div class="text-center">
+        &copy; 2025 StillMe. Tous droits réservés.
+      </div>
+  </footer>
+</body>
+</html>
